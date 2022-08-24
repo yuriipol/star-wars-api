@@ -1,4 +1,5 @@
 import { Component } from "react";
+import style from "./Gallary.module.css";
 
 class Gallary extends Component {
   state = {
@@ -13,18 +14,24 @@ class Gallary extends Component {
     fetch(`https://swapi.py4e.com/api/people/?search=${this.props.searchName}`)
       .then((result) => result.json())
       .then((data) => data.results)
-      .then((heroes) =>
-        this.setState({
-          heroes: heroes,
-        })
+      .then(
+        (heroes) =>
+          this.setState({
+            heroes: heroes,
+          })
+        // console.log(heroes)
       );
   }
   render() {
     const { heroes } = this.state;
     return (
-      <ol>
+      <ol className={style.list}>
         {heroes.map((item) => (
-          <li key={item.name} onClick={() => this.props.onClick(item)}>
+          <li
+            key={item.name}
+            onClick={() => this.props.onClick(item)}
+            className={style.item}
+          >
             {item.name} - {item.gender}
           </li>
         ))}

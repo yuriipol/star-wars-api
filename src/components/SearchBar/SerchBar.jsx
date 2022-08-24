@@ -1,4 +1,5 @@
 import { Component } from "react";
+import style from "./SearchBar.module.css";
 
 class SerchBar extends Component {
   state = {
@@ -14,11 +15,12 @@ class SerchBar extends Component {
   render() {
     const { name } = this.state;
     return (
-      <form onSubmit={this.onFormSearch}>
+      <form onSubmit={this.onFormSearch} className={style.form}>
         <label>
           <input
             type="text"
             value={name}
+            className={style.input}
             onChange={(event) => {
               this.setState({ name: event.target.value });
             }}
