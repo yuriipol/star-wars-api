@@ -1,17 +1,41 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import SerchBar from "./components/SearchBar/SerchBar";
 import Gallary from "./components/Gallary/Gallary";
 import Modal from "./components/Modal/Modal";
 
+const initialState = {
+  searchName: "",
+  hero: null,
+};
+
+const reducer = (state, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case "searchName":
+      return { ...state, searchName: payload };
+
+    case "hero":
+      return { ...state, hero: payload };
+
+    case "resetHero":
+      return { ...state, hero: null };
+
+    default:
+      return state;
+  }
+};
+
 const App = () => {
-  const [searchName, setSearchName] = useState("");
-  const [hero, setHero] = useState(null);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const onFormSubmit = (name) => setSearchName(name);
+  const { searchName, hero } = state;
 
-  const onClick = (hero) => setHero(hero);
+  const onFormSubmit = (name) =>
+    dispatch({ type: "searchName", payload: name });
 
-  const onClose = () => setHero(null);
+  const onClick = (hero) => dispatch({ type: "hero", payload: hero });
+
+  const onClose = () => dispatch({ type: "resetHero" });
 
   if (hero) {
     const { name, gender, birth_year, hair_color, skin_color } = hero;
